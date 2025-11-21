@@ -17,6 +17,7 @@ import PrestadorServico from './pages/PrestadorServico';
 import AgendarReVistoria from './pages/AgendarReVistoria';
 import RealizarReVistoria from './pages/RealizarReVistoria';
 import LaudoReVistoria from './pages/LaudoReVistoria';
+import Documentacao from './pages/Documentacao';
 
 
 export const PAGES = {
@@ -39,6 +40,7 @@ export const PAGES = {
     "AgendarReVistoria": AgendarReVistoria,
     "RealizarReVistoria": RealizarReVistoria,
     "LaudoReVistoria": LaudoReVistoria,
+    "Documentacao": Documentacao,
 }
 
 export const pagesConfig = {
