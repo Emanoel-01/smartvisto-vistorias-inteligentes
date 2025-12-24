@@ -5,16 +5,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Save, Building, Upload } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Save, Building, Upload, Lock, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { motion } from "framer-motion";
 import { UploadFile } from "@/integrations/Core";
+import { base44 } from "@/api/base44Client";
 
 export default function Configuracoes() {
   const [loading, setLoading] = useState(true);
   const [salvando, setSalvando] = useState(false);
   const [uploadandoLogo, setUploadandoLogo] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isLicencaEducacional, setIsLicencaEducacional] = useState(false);
   const [configuracao, setConfiguracao] = useState({
     nome_empresa: '',
     cnpj: '',
@@ -32,6 +37,14 @@ export default function Configuracoes() {
 
   const carregarConfiguracoes = async () => {
     try {
+      // Carregar dados do usuário
+      const userData = await base44.auth.me();
+      setUser(userData);
+      
+      // Verificar se é licença educacional
+      const ehEducacional = userData?.tipo_licenca === 'educacional';
+      setIsLicencaEducacional(ehEducacional);
+
       const configs = await ConfiguracaoEmpresa.list();
       if (configs.length > 0) {
         setConfiguracao(configs[0]);
@@ -73,6 +86,12 @@ export default function Configuracoes() {
 
   const salvarConfiguracoes = async (e) => {
     e.preventDefault();
+    
+    // Bloquear salvamento se for licença educacional
+    if (isLicencaEducacional) {
+      alert('Você possui uma Licença Educacional e não pode editar as configurações da empresa.');
+      return;
+    }
     
     if (!configuracao.nome_empresa.trim()) {
       alert('O nome da empresa é obrigatório');
@@ -125,11 +144,37 @@ export default function Configuracoes() {
               <ArrowLeft className="w-5 h-5" />
             </Button>
           </Link>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Configurações da Empresa</h1>
+          <div className="flex-1">
+            <div className="flex items-center gap-3">
+              <h1 className="text-3xl font-bold text-gray-900">Configurações da Empresa</h1>
+              {isLicencaEducacional && (
+                <Badge className="bg-orange-100 text-orange-800 border-orange-300">
+                  <Lock className="w-3 h-3 mr-1" />
+                  Licença Educacional
+                </Badge>
+              )}
+            </div>
             <p className="text-gray-600">Configure as informações que aparecerão nos laudos</p>
           </div>
         </motion.div>
+
+        {/* Alerta de Licença Educacional */}
+        {isLicencaEducacional && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6"
+          >
+            <Alert className="border-orange-200 bg-orange-50">
+              <Info className="h-4 w-4 text-orange-600" />
+              <AlertDescription className="text-orange-800">
+                <strong>Licença Educacional:</strong> Você está usando uma licença educacional. 
+                Todos os dados da empresa e configurações estão bloqueados e não podem ser editados. 
+                Para obter acesso completo, atualize para uma licença comercial.
+              </AlertDescription>
+            </Alert>
+          </motion.div>
+        )}
 
         <motion.form
           initial={{ opacity: 0, y: 20 }}
@@ -158,6 +203,7 @@ export default function Configuracoes() {
                     placeholder="Razão social da empresa"
                     className="mt-1"
                     required
+                    disabled={isLicencaEducacional}
                   />
                 </div>
                 
@@ -171,6 +217,7 @@ export default function Configuracoes() {
                     onChange={(e) => handleInputChange('cnpj', e.target.value)}
                     placeholder="00.000.000/0000-00"
                     className="mt-1"
+                    disabled={isLicencaEducacional}
                   />
                 </div>
                 
@@ -184,6 +231,7 @@ export default function Configuracoes() {
                     onChange={(e) => handleInputChange('telefone', e.target.value)}
                     placeholder="(11) 99999-9999"
                     className="mt-1"
+                    disabled={isLicencaEducacional}
                   />
                 </div>
                 
@@ -198,6 +246,7 @@ export default function Configuracoes() {
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     placeholder="contato@empresa.com"
                     className="mt-1"
+                    disabled={isLicencaEducacional}
                   />
                 </div>
                 
@@ -211,6 +260,7 @@ export default function Configuracoes() {
                     onChange={(e) => handleInputChange('endereco', e.target.value)}
                     placeholder="Rua, número, bairro, cidade, CEP"
                     className="mt-1"
+                    disabled={isLicencaEducacional}
                   />
                 </div>
               </div>
@@ -241,7 +291,7 @@ export default function Configuracoes() {
                       type="button"
                       variant="outline"
                       onClick={() => document.getElementById('logo-upload').click()}
-                      disabled={uploadandoLogo}
+                      disabled={uploadandoLogo || isLicencaEducacional}
                     >
                       {uploadandoLogo ? (
                         <>
@@ -259,6 +309,7 @@ export default function Configuracoes() {
                     <Select
                       value={configuracao.posicao_logo}
                       onValueChange={(value) => handleInputChange('posicao_logo', value)}
+                      disabled={isLicencaEducacional}
                     >
                       <SelectTrigger className="w-40">
                         <SelectValue />
@@ -295,12 +346,14 @@ export default function Configuracoes() {
                     value={configuracao.cor_primaria}
                     onChange={(e) => handleInputChange('cor_primaria', e.target.value)}
                     className="w-16 h-10 p-1"
+                    disabled={isLicencaEducacional}
                   />
                   <Input
                     value={configuracao.cor_primaria}
                     onChange={(e) => handleInputChange('cor_primaria', e.target.value)}
                     placeholder="#2563eb"
                     className="flex-1"
+                    disabled={isLicencaEducacional}
                   />
                 </div>
               </div>
@@ -312,7 +365,7 @@ export default function Configuracoes() {
             <Button
               type="submit"
               size="lg"
-              disabled={salvando}
+              disabled={salvando || isLicencaEducacional}
               className="bg-blue-600 hover:bg-blue-700 shadow-lg px-8"
             >
               {salvando ? (

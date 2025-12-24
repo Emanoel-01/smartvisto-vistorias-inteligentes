@@ -1,46 +1,48 @@
-import Dashboard from './pages/Dashboard';
-import NovaVistoria from './pages/NovaVistoria';
-import EditarVistoria from './pages/EditarVistoria';
-import Assinaturas from './pages/Assinaturas';
-import LaudoPDF from './pages/LaudoPDF';
-import Configuracoes from './pages/Configuracoes';
-import GestaoNaoConformidade from './pages/GestaoNaoConformidade';
-import DetalhesVistoria from './pages/DetalhesVistoria';
-import Analytics from './pages/Analytics';
-import GestaoNaoConformidades from './pages/GestaoNaoConformidades';
-import ColaboracaoVistoria from './pages/ColaboracaoVistoria';
-import VistoriaPorVoz from './pages/VistoriaPorVoz';
-import GerenciarTemplates from './pages/GerenciarTemplates';
-import LaudoInterativo from './pages/LaudoInterativo';
-import GerenciarGuias from './pages/GerenciarGuias';
-import PrestadorServico from './pages/PrestadorServico';
 import AgendarReVistoria from './pages/AgendarReVistoria';
-import RealizarReVistoria from './pages/RealizarReVistoria';
-import LaudoReVistoria from './pages/LaudoReVistoria';
+import Analytics from './pages/Analytics';
+import Assinaturas from './pages/Assinaturas';
+import ColaboracaoVistoria from './pages/ColaboracaoVistoria';
+import Configuracoes from './pages/Configuracoes';
+import Dashboard from './pages/Dashboard';
+import DetalhesVistoria from './pages/DetalhesVistoria';
 import Documentacao from './pages/Documentacao';
+import EditarVistoria from './pages/EditarVistoria';
+import GerenciarGuias from './pages/GerenciarGuias';
+import GerenciarTemplates from './pages/GerenciarTemplates';
+import GestaoNaoConformidade from './pages/GestaoNaoConformidade';
+import GestaoNaoConformidades from './pages/GestaoNaoConformidades';
+import Home from './pages/Home';
+import LaudoInterativo from './pages/LaudoInterativo';
+import LaudoPDF from './pages/LaudoPDF';
+import LaudoReVistoria from './pages/LaudoReVistoria';
+import NovaVistoria from './pages/NovaVistoria';
+import PrestadorServico from './pages/PrestadorServico';
+import RealizarReVistoria from './pages/RealizarReVistoria';
+import VistoriaPorVoz from './pages/VistoriaPorVoz';
 
 
 export const PAGES = {
-    "Dashboard": Dashboard,
-    "NovaVistoria": NovaVistoria,
-    "EditarVistoria": EditarVistoria,
-    "Assinaturas": Assinaturas,
-    "LaudoPDF": LaudoPDF,
-    "Configuracoes": Configuracoes,
-    "GestaoNaoConformidade": GestaoNaoConformidade,
-    "DetalhesVistoria": DetalhesVistoria,
-    "Analytics": Analytics,
-    "GestaoNaoConformidades": GestaoNaoConformidades,
-    "ColaboracaoVistoria": ColaboracaoVistoria,
-    "VistoriaPorVoz": VistoriaPorVoz,
-    "GerenciarTemplates": GerenciarTemplates,
-    "LaudoInterativo": LaudoInterativo,
-    "GerenciarGuias": GerenciarGuias,
-    "PrestadorServico": PrestadorServico,
     "AgendarReVistoria": AgendarReVistoria,
-    "RealizarReVistoria": RealizarReVistoria,
-    "LaudoReVistoria": LaudoReVistoria,
+    "Analytics": Analytics,
+    "Assinaturas": Assinaturas,
+    "ColaboracaoVistoria": ColaboracaoVistoria,
+    "Configuracoes": Configuracoes,
+    "Dashboard": Dashboard,
+    "DetalhesVistoria": DetalhesVistoria,
     "Documentacao": Documentacao,
+    "EditarVistoria": EditarVistoria,
+    "GerenciarGuias": GerenciarGuias,
+    "GerenciarTemplates": GerenciarTemplates,
+    "GestaoNaoConformidade": GestaoNaoConformidade,
+    "GestaoNaoConformidades": GestaoNaoConformidades,
+    "Home": Home,
+    "LaudoInterativo": LaudoInterativo,
+    "LaudoPDF": LaudoPDF,
+    "LaudoReVistoria": LaudoReVistoria,
+    "NovaVistoria": NovaVistoria,
+    "PrestadorServico": PrestadorServico,
+    "RealizarReVistoria": RealizarReVistoria,
+    "VistoriaPorVoz": VistoriaPorVoz,
 }
 
 export const pagesConfig = {
